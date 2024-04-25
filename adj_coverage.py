@@ -8,25 +8,20 @@ import pickle
 import logging
 import math
 
-
 # Configure logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
-### Initialize variables
-target_name = 'WOMA-1_1-cell_1'
-ribo_file = 'Rep_6'
-exp= "OMA-1_1cell_C"
-min_len = 23
-max_len = 40
-alias = False
-ribo_path = f'/home/reiko/ribopy_analysis/files_analysis_c_elegans/ribo_files/{ribo_file}.ribo'
-reference_path = '/home/reiko/ribopy_analysis/files_analysis_c_elegans/celegans_reference/appris_celegans_v1_selected_new.fa'
-bed_file = '/home/reiko/ribopy_analysis/files_analysis_c_elegans/celegans_reference/appris_celegans_v1_actual_regions_new.bed'
-output_file = f'/home/reiko/ribopy_analysis/files_analysis_c_elegans/results/{target_name}_coverage.pkl'
-ribo_object = Ribo(ribo_path)
-cds_range = get_cds_range_lookup(bed_file)
+# Initialize variables
+min_len = 26
+max_len = 30
+exp = 'WT_control_A'
+alias = True
+ribo_path = f'/home/reiko/ribopy_analysis/mouse/data/merged.ribo'
+output_file = f'/home/reiko/ribopy_analysis/mouse/data/coverage_{exp}.pkl'
+ribo_object = Ribo(ribo_path, alias=ribopy.api.alias.apris_human_alias)
+cds_range = get_cds_range_lookup(ribo_object)
 offset = get_psite_offset(ribo_object, exp, min_len, max_len)
-transcript_list = ribo_object.transcript_names
+transcript_list = [transcript.split("|")[4] for transcript in ribo_object.transcript_names]
 
 def get_adj_coverage(ribo_object, transcript, exp, min_len, max_len, alias, cds_range, offset):
     start, stop = cds_range[transcript]
@@ -77,7 +72,7 @@ if __name__ == '__main__':
         logging.info("Starting the program...")
 
         # Parallelize coverage calculation
-        adj_coverage_batches = get_adj_coverage_parallel(transcript_list, num_cores=15)
+        adj_coverage_batches = get_adj_coverage_parallel(transcript_list, num_cores=multiprocessing.cpu_count())
 
         # Combine results from batches
         adj_coverage_dict = {}
@@ -96,4 +91,3 @@ if __name__ == '__main__':
         end_time = time.time()
         elapsed_time = end_time - start_time
         print(f"Time taken: {elapsed_time} seconds")
-
