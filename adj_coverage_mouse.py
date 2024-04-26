@@ -1,6 +1,6 @@
 import ribopy
 from ribopy import Ribo
-from functions import get_cds_range_lookup, get_psite_offset
+from functions import get_cds_range_lookup
 import numpy as np
 import multiprocessing
 import time
@@ -17,7 +17,7 @@ def transcript_generator(ribo_object):
         yield transcript.split("|")[4]
 
 # Function to process a single transcript and return coverage
-def process_transcript(transcript, exp, min_len, max_len, alias, cds_range, ribo_path):
+def process_transcript(transcript, exp, min_len, max_len, alias, cds_range, offset, ribo_path):
     try:
         # Initialize a new Ribo object within the worker process
         ribo_object = Ribo(ribo_path, alias=ribopy.api.alias.apris_human_alias)
@@ -26,15 +26,9 @@ def process_transcript(transcript, exp, min_len, max_len, alias, cds_range, ribo
         if start < offset:
             return transcript, None
 
-        offset = get_psite_offset(ribo_object, exp, min_len, max_len)
-
-        coverages = [
-            ribo_object.get_coverage(experiment=exp, range_lower=i, range_upper=i, alias=alias)
-            [transcript][start - offset[i] : stop - offset[i]]
-            for i in range(min_len, max_len + 1)
-        ]
-        coverage = sum(coverages, np.zeros_like(coverages[0]))
-    
+        coverage = ribo_object.get_coverage(experiment=exp, range_lower=min_len, range_upper=max_len, alias=alias)\
+                   [transcript][start - offset : stop - offset]
+        
         return transcript, coverage
     except Exception as e:
         logging.error(f"Error processing transcript {transcript}: {e}")
@@ -47,11 +41,12 @@ def process_wrapper(args):
 if __name__ == '__main__':
     try:
         # Initialize variables
-        ribo_path = input("Ribo file path: ")
         exp = input("Experiment: ")
-        min_len = int(input("Minimum read length: "))
-        max_len = int(input("Maximum read length: "))
+        min_len = 26
+        max_len = 30
+        offset = 13
         alias = True
+        ribo_path = '/home/reiko/ribopy_analysis/mouse/data/merged.ribo'
         ribo_object = Ribo(ribo_path, alias=ribopy.api.alias.apris_human_alias)
         cds_range = get_cds_range_lookup(ribo_object)
 
@@ -62,7 +57,7 @@ if __name__ == '__main__':
         with multiprocessing.Pool() as pool:
             for transcript, coverage in pool.imap_unordered(
                     process_wrapper,
-                    [(t, exp, min_len, max_len, alias, cds_range,  ribo_path) for t in transcript_generator(ribo_object)]
+                    [(t, exp, min_len, max_len, alias, cds_range, offset, ribo_path) for t in transcript_generator(ribo_object)]
                 ):
                 # Accumulate the coverage for each transcript in the dictionary
                 coverage_dict[transcript] = coverage
@@ -77,3 +72,6 @@ if __name__ == '__main__':
 
     finally:
         logging.info("Program finished.")
+
+
+
