@@ -16,7 +16,10 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %
 def process_transcript(transcript, exp, min_len, max_len, alias, cds_range, offset, ribo_path):
     try:
         # Initialize a new Ribo object within the worker process
-        ribo_object = Ribo(ribo_path)
+        if alias == True:
+            ribo_object = Ribo(ribo_path, alias=ribopy.api.alias.apris_human_alias)
+        else:
+            ribo_object = Ribo(ribo_path)
         
         start, stop = cds_range[transcript]
 
