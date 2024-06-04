@@ -7,6 +7,7 @@ import time
 import pickle
 import logging
 import math
+import gzip
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -48,12 +49,13 @@ if __name__ == '__main__':
         min_len = int(input('Enter minimum read length to be analyzed: '))
         max_len = int(input('Enter maximum read length to be analyzed: '))
         alias_int = int(input('Enter 1 for mouse or 2 for other: '))
+        ribo_path = input('Enter ribo file path, e.g., \'/home/all.ribo\': ')
         if alias_int == 1:
             alias = True
+            ribo_object = Ribo(ribo_path, alias=ribopy.api.alias.apris_human_alias)
         else: 
             alias = False
-        ribo_path = input('Enter ribo file path, e.g., \'/home/all.ribo\': ')
-        ribo_object = Ribo(ribo_path)
+            ribo_object = Ribo(ribo_path)
         cds_range = get_cds_range_lookup(ribo_object)
 
         all_coverage_dict = {}
@@ -66,16 +68,16 @@ if __name__ == '__main__':
             with multiprocessing.Pool() as pool:
                 for transcript, coverage in pool.imap_unordered(
                         process_wrapper,
-                        [(t, exp, min_len, max_len, alias, cds_range, offset, ribo_path) for t in ribo_object.transcript_names]
+                        [(t, exp, min_len, max_len, alias, cds_range, offset, ribo_path) for t in ribo_object.transcript_names[:10]]
                     ):
                     # Accumulate the coverage for each transcript in the dictionary
                     coverage_dict[transcript] = coverage
             all_coverage_dict[exp] = coverage_dict
 
-        # Write the coverage dictionary to the output file
-        output_file = 'coverage.pkl'
-        with open(output_file, 'wb') as f:
+        output_file = 'coverage.pkl.gz'
+        with gzip.open(output_file, 'wb') as f:
             pickle.dump(all_coverage_dict, f)
+
         logging.info(f"Saved as {output_file}.")
 
     except Exception as e:
