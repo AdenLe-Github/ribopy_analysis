@@ -68,7 +68,7 @@ if __name__ == '__main__':
             with multiprocessing.Pool() as pool:
                 for transcript, coverage in pool.imap_unordered(
                         process_wrapper,
-                        [(t, exp, min_len, max_len, alias, cds_range, offset, ribo_path) for t in ribo_object.transcript_names[:10]]
+                        [(t, exp, min_len, max_len, alias, cds_range, offset, ribo_path) for t in ribo_object.transcript_names]
                     ):
                     # Accumulate the coverage for each transcript in the dictionary
                     coverage_dict[transcript] = coverage
