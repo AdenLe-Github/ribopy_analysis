@@ -5,8 +5,9 @@ Input:
 * Maximum read length
 * Organism: For mouse, input 1. For other organisms, input 2.
 * Ribo file path
+
 Output
-* Gzipped pickle file: '{Experiment : {Transcript : Adjusted coverage array}}'
+* Gzipped pickle file containing a dictionary of the adjusted coverage data: {Experiment : {Transcript : Adjusted coverage array}}
 
 Run the following command:
 ```
