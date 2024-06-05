@@ -1,6 +1,8 @@
 1. Generate pickle file
 
+```
 python3 adj_coverage.py
+```
 
 2. Codon occupancy
 
