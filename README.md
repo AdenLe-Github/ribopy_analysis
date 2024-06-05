@@ -1,7 +1,12 @@
 # 1. Generate pickle file
 
 Input: 
-* Ribo file
+* Minimum read length
+* Maximum read length
+* Organism: For mouse, input 1. For other organisms, input 2.
+* Ribo file path
+Output
+* Gzipped pickle file: '{Experiment : {Transcript : Adjusted coverage array}}'
 
 Run the following command:
 ```
