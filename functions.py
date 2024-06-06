@@ -11,7 +11,7 @@ def get_sequence(ribo_object, reference_file_path, alias):
     Parameters:
         ribo_object (Ribo): The Ribo object containing ribosome profiling data.
         reference_file_path (str): The file path to the reference FASTA file.
-        alias
+        alias (bool): Whether or not alias is used.
 
     Returns:
         dict: A dictionary mapping transcript identifiers to their respective sequences.
@@ -60,6 +60,12 @@ def get_psite_offset(ribo_object, exp, mmin, mmax):
 def get_cds_range_lookup(ribo_object):
     """
     Create a dict of gene to CDS ranges.
+    
+    Parameters:
+        ribo_object (Ribo): The Ribo object containing ribosome profiling data.
+
+    Returns:
+        dict: A dictionary mapping transcript identifiers to the start and stop positions of CDS.
     """
     names = get_reference_names(ribo_object._handle)
     if ribo_object.alias is not None:
