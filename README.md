@@ -1,3 +1,9 @@
+Install libraries:
+
+```
+pip install -r requirements.txt
+```
+
 # 1. Generate pickle file
 
 Run the following command:
