@@ -1,3 +1,9 @@
+Clone repository:
+
+```
+git clone https://github.com/reikostachibana/ribopy_analysis
+```
+
 Install libraries:
 
 ```
