@@ -4,7 +4,7 @@ Clone repository:
 git clone https://github.com/reikostachibana/ribopy_analysis
 ```
 
-Install libraries:
+# Install libraries:
 
 ```
 pip install -r requirements.txt
@@ -12,15 +12,18 @@ pip install -r requirements.txt
 
 # 1. Generate pickle file
 
+
+
 Run the following command:
 ```
 python3 adj_coverage.py
 ```
 
 Input: 
-* Minimum read length
-* Maximum read length
 * Organism: For mouse, input 1. For other organisms, input 2.
+* Minimum read length of the coverage data of read lengths to analyze. 
+* Maximum read length of the read lengths
+  * For example, to analyze standard footprints of 28 nucleotides, I chose a range of 26-30 nucleotides.
 * Ribo file path
 
 Output
