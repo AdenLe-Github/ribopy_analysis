@@ -22,7 +22,15 @@ Input:
 * Minimum read length of the coverage data of read lengths to analyze. 
 * Maximum read length of the read lengths
   * For example, to analyze standard footprints of 28 nucleotides, I chose a range of 26-30 nucleotides.
-* Ribo file path: Ribo file is generated using [RiboFlow](https://github.com/ribosomeprofiling/riboflow).
+* Ribo file path: Ribo file is generated using [RiboFlow](https://github.com/ribosomeprofiling/riboflow). For the example inputs, run the following for the mouse ribo file:
+
+```
+./example_input_mouse/merged_v2.ribo
+```
+Run the following for the _C. elegans_ ribo file:
+```
+./example_input_c_elegans/all.ribo
+```
 
 Output
 * Gzipped pickle file containing a dictionary of the adjusted coverage data: {Experiment : {Transcript : Adjusted coverage array}}.
