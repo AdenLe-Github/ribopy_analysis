@@ -60,7 +60,7 @@ As each experiment is processed, Terminal should give a confirmation. Example:
 
 Output:
 * Gzipped pickle file containing a dictionary of the adjusted coverage data: {Experiment : {Transcript : Adjusted coverage array}}.
-  * This is automatically saved as `coverage.pkl.gz` in the same working directory.
+  * This is automatically saved as `coverage.pkl.gz` in the working directory.
 
 Explanation of output:
 * The gzipped pickle file can be used in subsequent analysis.
