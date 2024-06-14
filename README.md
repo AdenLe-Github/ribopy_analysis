@@ -68,7 +68,7 @@ Explanation of output:
 Confirmation of success: 
 * Upon successful completion, you should see a message in the terminal: `Saved as coverage.pkl.gz`.
 * Check the directory to confirm the presence of the `coverage.pkl.gz` file.
-* Confirm example output with the example gzipped pickle file in `example_data_c_elegans`.
+  * If using the example _C. elegans_ Ribo file, compare with the example gzipped pickle file in `example_data_c_elegans` saved as `example_coverage.pkl.gz`.
 
 Error handling:
 * If you encounter errors, check the console for detailed messages. Ensure all inputs are correct and that you have the necessary permissions to read the ribo file and write to the directory.
