@@ -20,9 +20,14 @@ Install libraries:
 pip install -r requirements.txt
 ```
 
+Prerequisites:
+* A ribo file generated using [RiboFlow](https://github.com/ribosomeprofiling/riboflow)
+* A reference file.
+ * [Yeast](https://github.com/ribosomeprofiling/yeast_reference)
+ * [Mouse](https://github.com/ribosomeprofiling/mouse_reference)
+ * Reference file for _C. elegans_ can be found in example_data_c_elegans.
+
 # 1. Generate pickle file
-
-
 
 Run the following command:
 ```
@@ -32,13 +37,14 @@ python3 adj_coverage.py
 Input: 
 * Organism: For mouse, input 1. For other organisms, input 2.
 * Minimum read length of the coverage data of read lengths to analyze. 
-* Maximum read length of the read lengths
-  * For the _C. elegans_ example, the minimum read length was set to 29 and the maximum to 33.
-* Ribo file path: Ribo file is generated using [RiboFlow](https://github.com/ribosomeprofiling/riboflow).
-  * Example for the C. elegans ribo file: ./example_input_c_elegans/all.ribo 
+* Maximum read length of the coverage data of read lengths to analyze. 
+  * For the _C. elegans_ example, the minimum read length was set to 29 and the maximum to 33, which was determined experimentally based on the RPF length distribution of the coding region.
+* Ribo file path
+  * Example for the C. elegans ribo file: `./example_data_c_elegans/all.ribo` 
 
 Output
 * Gzipped pickle file containing a dictionary of the adjusted coverage data: {Experiment : {Transcript : Adjusted coverage array}}.
+  * This is automatically saved as coverage.pkl.gz.
 
 # 2. Codon occupancy
 
