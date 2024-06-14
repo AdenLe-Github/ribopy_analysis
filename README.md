@@ -34,7 +34,7 @@ Run the following command:
 python3 adj_coverage.py
 ```
 
-Input (prompted by Terminal): 
+Input (prompted by the console): 
 * Minimum read length of the coverage data of read lengths to analyze. 
 * Maximum read length of the coverage data of read lengths to analyze.
   * For the _C. elegans_ example, the minimum read length was set to 29 and the maximum to 33, which was determined experimentally based on the RPF length distribution of the coding region.
@@ -50,7 +50,7 @@ Enter maximum read length to be analyzed: 33
 Enter 1 for mouse or 2 for other: 2
 Enter ribo file path, e.g., '/home/all.ribo': ./example_data_c_elegans/all.ribo
 ```
-As each experiment is processed, Terminal should give a confirmation. Example:
+As each experiment is processed, the console should give a confirmation. Example:
 ```
 2024-06-13 19:09:57,550 - DEBUG - Creating converter from 3 to 5
 2024-06-13 19:09:57,598 - INFO - Starting CHX_rep1...
@@ -61,12 +61,10 @@ As each experiment is processed, Terminal should give a confirmation. Example:
 Output:
 * Gzipped pickle file containing a dictionary of the adjusted coverage data: {Experiment : {Transcript : Adjusted coverage array}}.
   * This is automatically saved as `coverage.pkl.gz` in the working directory.
-
-Explanation of output:
-* The gzipped pickle file can be used in subsequent analysis.
+  * The gzipped pickle file will be used in subsequent analysis.
 
 Confirmation of success: 
-* Upon successful completion, you should see a message in the terminal: `Saved as coverage.pkl.gz`.
+* Upon successful completion, you should see a message in the console: `Saved as coverage.pkl.gz`.
 * Check the directory to confirm the presence of the `coverage.pkl.gz` file.
   * If using the example _C. elegans_ Ribo file, compare with the example gzipped pickle file in `example_data_c_elegans` saved as `example_coverage.pkl.gz`.
 
@@ -93,7 +91,11 @@ Input:
   * Example input for _C. elegans_: `2`.
 
 Output:
-* CSV file containing the raw counts of codons of all footprints
+* A CSV file containing the raw counts of codons at the P-site of all footprints within the coding region across all transcripts.
+  * Rows: codons
+  * Columns: experiments
+    * The last column represents the cumulative total of codons in the coding sequence across all transcripts
+  * Values: raw counts of codons at the P-site of all transcripts within the coding region across all transcripts
 
 # 3. Codon heatmap
 
