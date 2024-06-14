@@ -72,7 +72,8 @@ Confirmation of success:
 
 Error handling:
 * If you encounter errors, check the console for detailed messages. Ensure all inputs are correct and that you have the necessary permissions to read the ribo file and write to the directory.
-* The script's runtime may vary depending on the size of the ribo file and the number of transcripts. For large datasets, this process may take several minutes to hours. 
+* The script's runtime may vary depending on the size of the ribo file and the number of transcripts. For large datasets, this process may take hours.
+  * For the example _C. elegans_ dataset, each experiment took around an hour to process, totaling to around six hours.
 
 # 2. Codon occupancy
 
