@@ -23,9 +23,9 @@ pip install -r requirements.txt
 Prerequisites:
 * A ribo file generated using [RiboFlow](https://github.com/ribosomeprofiling/riboflow)
 * A reference file.
- * [Yeast](https://github.com/ribosomeprofiling/yeast_reference)
- * [Mouse](https://github.com/ribosomeprofiling/mouse_reference)
- * Reference file for _C. elegans_ can be found in example_data_c_elegans.
+  * [Yeast](https://github.com/ribosomeprofiling/yeast_reference)
+  * [Mouse](https://github.com/ribosomeprofiling/mouse_reference)
+  * Reference file for _C. elegans_ can be found in example_data_c_elegans.
 
 # 1. Generate pickle file
 
