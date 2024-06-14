@@ -27,14 +27,14 @@ Prerequisites:
   * [Mouse](https://github.com/ribosomeprofiling/mouse_reference)
   * Reference file for _C. elegans_ can be found in `example_data_c_elegans` as `appris_celegans_v1_selected_new.fa`.
 
-# 1. Generate pickle file
+# 1. Generate gzipped pickle file
 
 Run the following command:
 ```
 python3 adj_coverage.py
 ```
 
-Input: 
+Input (prompted by Terminal): 
 * Minimum read length of the coverage data of read lengths to analyze. 
 * Maximum read length of the coverage data of read lengths to analyze.
   * For the _C. elegans_ example, the minimum read length was set to 29 and the maximum to 33, which was determined experimentally based on the RPF length distribution of the coding region.
@@ -42,10 +42,37 @@ Input:
   * Example input for _C. elegans_: `2`.
 * Ribo file path.
   * Example input for the _C. elegans_ ribo file path: `./example_data_c_elegans/all.ribo`.
+ 
+Example input sequence:
+```
+Enter minimum read length to be analyzed: 29
+Enter maximum read length to be analyzed: 33
+Enter 1 for mouse or 2 for other: 2
+Enter ribo file path, e.g., '/home/all.ribo': ./example_data_c_elegans/all.ribo
+```
+As each experiment is processed, Terminal should give a confirmation. Example:
+```
+2024-06-13 19:09:57,550 - DEBUG - Creating converter from 3 to 5
+2024-06-13 19:09:57,598 - INFO - Starting CHX_rep1...
+2024-06-13 20:05:22,385 - INFO - Starting CHX_rep2...
+2024-06-13 20:05:16,725 - INFO - Starting CHX_rep3...
+```
 
-Output
+Output:
 * Gzipped pickle file containing a dictionary of the adjusted coverage data: {Experiment : {Transcript : Adjusted coverage array}}.
-  * This is automatically saved as `coverage.pkl.gz`.
+  * This is automatically saved as `coverage.pkl.gz` in the same working directory.
+
+Explanation of output:
+* The gzipped pickle file can be used in subsequent analysis.
+
+Confirmation of success: 
+* Upon successful completion, you should see a message in the terminal: `Saved as coverage.pkl.gz`.
+* Check the directory to confirm the presence of the `coverage.pkl.gz` file.
+* Confirm example output with the example gzipped pickle file in `example_data_c_elegans`.
+
+Error handling:
+* If you encounter errors, check the console for detailed messages. Ensure all inputs are correct and that you have the necessary permissions to read the ribo file and write to the directory.
+* The script's runtime may vary depending on the size of the ribo file and the number of transcripts. For large datasets, this process may take several minutes to hours. 
 
 # 2. Codon occupancy
 
