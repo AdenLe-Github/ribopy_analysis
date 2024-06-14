@@ -25,7 +25,7 @@ Prerequisites:
 * A reference file.
   * [Yeast](https://github.com/ribosomeprofiling/yeast_reference)
   * [Mouse](https://github.com/ribosomeprofiling/mouse_reference)
-  * Reference file for _C. elegans_ can be found in example_data_c_elegans.
+  * Reference file for _C. elegans_ can be found in `example_data_c_elegans` as `appris_celegans_v1_selected_new.fa`.
 
 # 1. Generate pickle file
 
@@ -35,16 +35,17 @@ python3 adj_coverage.py
 ```
 
 Input: 
-* Organism: For mouse, input 1. For other organisms, input 2.
 * Minimum read length of the coverage data of read lengths to analyze. 
-* Maximum read length of the coverage data of read lengths to analyze. 
+* Maximum read length of the coverage data of read lengths to analyze.
   * For the _C. elegans_ example, the minimum read length was set to 29 and the maximum to 33, which was determined experimentally based on the RPF length distribution of the coding region.
-* Ribo file path
-  * Example for the C. elegans ribo file: `./example_data_c_elegans/all.ribo` 
+* Organism: For mouse, input 1. For other organisms, input 2.
+  * Example input for _C. elegans_: `2`.
+* Ribo file path.
+  * Example input for the _C. elegans_ ribo file path: `./example_data_c_elegans/all.ribo`.
 
 Output
 * Gzipped pickle file containing a dictionary of the adjusted coverage data: {Experiment : {Transcript : Adjusted coverage array}}.
-  * This is automatically saved as coverage.pkl.gz.
+  * This is automatically saved as `coverage.pkl.gz`.
 
 # 2. Codon occupancy
 
@@ -54,10 +55,14 @@ python3 codon_occupancy.py
 ```
 
 Input:
-* Ribo file path
-* Pickle file path
-* Reference file path
-* Organism
+* Ribo file path.
+  * Example input for _C. elegans_: `./example_data_c_elegans/all.ribo`.
+* Pickle file path.
+  * Example input for _C. elegans_: `./example_data_c_elegans/coverage.pkl.gz`. 
+* Reference file path.
+  * Example input for _C. elegans_: `./example_data_c_elegans/appris_celegans_v1_selected_new.fa`.
+* Organism: 1 for mouse, 2 for other.
+  * Example input for _C. elegans_: `2`.
 
 Output:
 * CSV file containing the raw counts of codons of all footprints
