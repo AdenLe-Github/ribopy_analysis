@@ -1,10 +1,10 @@
+numpy
+pandas==1.4.4
+ribopy==0.0.1
+multiprocess==0.70.14
+scipy==1.9.1
 dash==2.16.1
 dash-core-components==2.0.0
 dash-html-components==2.0.0
 dash-table==5.0.0
-multiprocess==0.70.14
-numpy
-pandas==1.4.4
 plotly==5.20.0
-ribopy==0.0.1
-scipy==1.9.1
