@@ -74,9 +74,12 @@ Error handling:
 * If you encounter errors, check the console for detailed messages. Ensure all inputs are correct and that you have the necessary permissions to read the ribo file and write to the directory.
 
 More about the script:
-
+* Uses multiprocessing, performing the adjustment for each transcript.
+* Calculates P-site offset based on the metadata of the start site. The function `get_psite_offset()` can be found in `functions.py`.
 
 # 2. Codon occupancy
+
+The script `codon_occupancy.py` 
 
 Run the following command:
 ```
