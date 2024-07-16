@@ -76,3 +76,6 @@ def get_cds_range_lookup(ribo_object):
     boundary_lookup = dict(zip(list(names), cds_ranges))
 
     return boundary_lookup
+
+    #Ignores the start codon ~ Addeded by Aden
+    #boundary_lookup = {k: (v[0] + 3, v[1]) for k, v in boundary_lookup.items()}
