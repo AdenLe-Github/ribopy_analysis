@@ -1,6 +1,6 @@
 import ribopy
 from ribopy import Ribo
-from functions import get_cds_range_lookup, get_psite_offset
+from functions import get_cds_range_lookup, get_asite_offset, get_psite_offset
 import numpy as np
 import multiprocessing
 import time
@@ -11,6 +11,7 @@ import gzip
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+print("yipee")
 
 # Function to process a single transcript and return coverage
 def process_transcript(transcript, exp, min_len, max_len, alias, cds_range, offset, ribo_path):
@@ -53,6 +54,7 @@ if __name__ == '__main__':
         max_len = int(input('Enter maximum read length to be analyzed: '))
         alias_int = int(input('Enter 1 for mouse or 2 for other: '))
         ribo_path = input('Enter ribo file path, e.g., \'/home/all.ribo\': ')
+        offset_mode = int(input('Enter 1 for P-site Offset, Enter 2 for A-site Offset'))
         if alias_int == 1:
             alias = True
             ribo_object = Ribo(ribo_path, alias=ribopy.api.alias.apris_human_alias)
@@ -65,7 +67,10 @@ if __name__ == '__main__':
         for exp in ribo_object.experiments:
             logging.info(f"Starting {exp}...")
             coverage_dict = {}
-            offset = get_psite_offset(ribo_object, exp, min_len, max_len)
+            if offset_mode == 1:
+                offset = get_psite_offset(ribo_object, exp, min_len, max_len)
+            if offset_mode == 2:
+                offset = get_asite_offset(ribo_object, exp, min_len, max_len)
 
             # Parallelize transcript processing
             with multiprocessing.Pool() as pool:

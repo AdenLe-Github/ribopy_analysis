@@ -57,6 +57,35 @@ def get_psite_offset(ribo_object, exp, mmin, mmax):
         p_site[index[1]] = offset 
     return p_site
 
+def get_asite_offset(ribo_object, exp, mmin, mmax):
+    """
+    Calculates the A-site offsets for ribosome profiling experiments.
+
+    Parameters:
+        ribo_object (Ribo): The Ribo object containing ribosome profiling data.
+        exp (str): The name of the experiment for which A-site offsets are calculated.
+        mmin (int): The minimum read length considered for A-site offset calculation.
+        mmax (int): The maximum read length considered for A-site offset calculation.
+
+    Returns:
+        dict: A dictionary mapping transcript identifiers to their respective A-site offsets.
+    """
+    df = (ribo_object.get_metagene("start", experiments=exp,
+                                   range_lower=mmin, range_upper=mmax,
+                                   sum_lengths=False,
+                                   sum_references=True))
+
+    a_site = {}
+
+    for index, row in df.iterrows():
+        # Adjusted window for A-site offsetting
+        max_value_index = row.iloc[38:44].idxmax()
+        offset = -1 * max_value_index + 1
+
+        a_site[index[1]] = offset
+    return a_site
+
+
 def get_cds_range_lookup(ribo_object):
     """
     Create a dict of gene to CDS ranges.
@@ -76,6 +105,3 @@ def get_cds_range_lookup(ribo_object):
     boundary_lookup = dict(zip(list(names), cds_ranges))
 
     return boundary_lookup
-
-    #Ignores the start codon ~ Addeded by Aden
-    #boundary_lookup = {k: (v[0] + 3, v[1]) for k, v in boundary_lookup.items()}
